@@ -1,4 +1,4 @@
-1.6.12 (2024-??-??)
+1.6.12 (2024-08-29)
 -------------------
 
 * Drop php 5 and 7.0 support as new versions enforced a syntax change that is not compatible with the old versions.
