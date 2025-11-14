@@ -49,5 +49,10 @@
     "scripts": {
         "test": "phpunit",
         "php-coveralls": "php-coveralls"
+    },
+    "config": {
+      "allow-plugins": {
+        "dealerdirect/phpcodesniffer-composer-installer": true
+      }
     }
 }
