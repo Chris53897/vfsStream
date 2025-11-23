@@ -1,10 +1,6 @@
 name: Code style
 
-on:
-  push:
-    branches:
-      - master
-  pull_request:
+on: ["push", "pull_request"]
 
 jobs:
   tests:
