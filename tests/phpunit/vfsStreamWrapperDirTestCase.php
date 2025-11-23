@@ -15,6 +15,7 @@ use bovigo\vfs\vfsStream;
 use bovigo\vfs\vfsStreamWrapper;
 
 use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\Test;
 use function bovigo\assert\assertFalse;
 use function bovigo\assert\assertNotNull;
@@ -57,6 +58,8 @@ class vfsStreamWrapperDirTestCase extends vfsStreamWrapperBaseTestCase
      * @test
      * @dataProvider  newRoots
      */
+    #[Test]
+    #[DataProvider('newRoots')]
     public function mkdirDoesNotOverwriteExistingRoot(string $newRoot): void
     {
         assertFalse(mkdir(vfsStream::url($newRoot), 0777, true));
@@ -67,6 +70,8 @@ class vfsStreamWrapperDirTestCase extends vfsStreamWrapperBaseTestCase
      * @test
      * @group  permissions
      */
+    #[Test]
+    #[Group('permissions')]
     public function mkdirNonRecursivelyIsRejectedWhenNotSpecified(): void
     {
         assertFalse(mkdir($this->subdir->url() . '/another/more'));
@@ -77,6 +82,8 @@ class vfsStreamWrapperDirTestCase extends vfsStreamWrapperBaseTestCase
      * @test
      * @group  permissions
      */
+    #[Test]
+    #[Group('permissions')]
     public function mkdirNonRecursivelyForSingleDirectory(): void
     {
         assertTrue(mkdir($this->root->url() . '/another'));
@@ -87,6 +94,8 @@ class vfsStreamWrapperDirTestCase extends vfsStreamWrapperBaseTestCase
      * @test
      * @group  permissions
      */
+    #[Test]
+    #[Group('permissions')]
     public function mkdirNonRecursivelyWithDefaultPermissions(): void
     {
         assertTrue(mkdir($this->root->url() . '/another'));
@@ -106,6 +115,9 @@ class vfsStreamWrapperDirTestCase extends vfsStreamWrapperBaseTestCase
      * @dataProvider  mkdirChildren
      * @group  permissions
      */
+    #[Test]
+    #[DataProvider('mkdirChildren')]
+    #[Group('permissions')]
     public function mkdirRecursively(string $child): void
     {
         assertTrue(mkdir($this->root->url() . '/another/more', 0775, true));
@@ -118,6 +130,8 @@ class vfsStreamWrapperDirTestCase extends vfsStreamWrapperBaseTestCase
      * @group  issue_9
      * @since  0.9.0
      */
+    #[Test]
+    #[Group('issue_9')]
     public function mkdirWithDots(): void
     {
         assertTrue(mkdir($this->root->url() . '/another/../more/.', 0777, true));
@@ -128,6 +142,8 @@ class vfsStreamWrapperDirTestCase extends vfsStreamWrapperBaseTestCase
      * @test
      * @group  permissions
      */
+    #[Test]
+    #[Group('permissions')]
     public function mkdirWithoutRootCreatesNewRoot(): void
     {
         vfsStreamWrapper::register();
@@ -141,6 +157,8 @@ class vfsStreamWrapperDirTestCase extends vfsStreamWrapperBaseTestCase
      * @test
      * @group  permissions
      */
+    #[Test]
+    #[Group('permissions')]
     public function mkdirWithoutRootCreatesNewRootDifferentPermissions(): void
     {
         vfsStreamWrapper::register();
@@ -153,6 +171,7 @@ class vfsStreamWrapperDirTestCase extends vfsStreamWrapperBaseTestCase
     /**
      * @test
      */
+    #[Test]
     public function mkdirOnExistingFileReturnsFalse(): void
     {
         assertFalse(mkdir($this->fileInSubdir->url() . '/another/more', 0777, true));
@@ -163,6 +182,9 @@ class vfsStreamWrapperDirTestCase extends vfsStreamWrapperBaseTestCase
      * @group  permissions
      * @group  bug_15
      */
+    #[Test]
+    #[Group('permissions')]
+    #[Group('bug_15')]
     public function mkdirDirCanNotCreateNewDirInNonWritingDirectory(): void
     {
         vfsStream::newDirectory('restrictedFolder', 0000)->at($this->root);
@@ -174,6 +196,8 @@ class vfsStreamWrapperDirTestCase extends vfsStreamWrapperBaseTestCase
      * @test
      * @group  issue_28
      */
+    #[Test]
+    #[Group('issue_28')]
     public function mkDirShouldNotOverwriteExistingDirectories(): void
     {
         $dir = vfsStream::url('root/dir');
@@ -185,6 +209,8 @@ class vfsStreamWrapperDirTestCase extends vfsStreamWrapperBaseTestCase
      * @test
      * @group  issue_28
      */
+    #[Test]
+    #[Group('issue_28')]
     public function mkDirShouldNotOverwriteExistingDirectoriesAndTriggerE_USER_WARNING(): void
     {
         $dir = vfsStream::url('root/dir');
@@ -200,6 +226,8 @@ class vfsStreamWrapperDirTestCase extends vfsStreamWrapperBaseTestCase
      * @test
      * @group  issue_28
      */
+    #[Test]
+    #[Group('issue_28')]
     public function mkDirShouldNotOverwriteExistingFiles(): void
     {
         assertFalse(@mkdir($this->fileInRoot->url()));
@@ -209,6 +237,8 @@ class vfsStreamWrapperDirTestCase extends vfsStreamWrapperBaseTestCase
      * @test
      * @group  issue_28
      */
+    #[Test]
+    #[Group('issue_28')]
     public function mkDirShouldNotOverwriteExistingFilesAndTriggerE_USER_WARNING(): void
     {
         expect(function (): void {
@@ -223,6 +253,8 @@ class vfsStreamWrapperDirTestCase extends vfsStreamWrapperBaseTestCase
      * @group  issue_131
      * @since  1.6.3
      */
+    #[Test]
+    #[Group('issue_131')]
     public function allowsRecursiveMkDirWithDirectoryName0(): void
     {
         $subdir = vfsStream::url('root/a/0');
@@ -235,6 +267,9 @@ class vfsStreamWrapperDirTestCase extends vfsStreamWrapperBaseTestCase
      * @group  permissions
      * @group  bug_15
      */
+    #[Test]
+    #[Group('permissions')]
+    #[Group('bug_15')]
     public function canNotIterateOverNonReadableDirectory(): void
     {
         $restricted = vfsStream::newDirectory('restrictedFolder', 0000)->at($this->root);
@@ -259,6 +294,8 @@ class vfsStreamWrapperDirTestCase extends vfsStreamWrapperBaseTestCase
      * @test
      * @dataProvider directories
      */
+    #[Test]
+    #[DataProvider('directories')]
     public function is_dirReturnsTrueForDirectories(string $directory): void
     {
         assertTrue(is_dir($directory));
@@ -290,6 +327,7 @@ class vfsStreamWrapperDirTestCase extends vfsStreamWrapperBaseTestCase
     /**
      * @test
      */
+    #[Test]
     public function canNotUnlinkDirectoryWithoutRoot(): void
     {
         vfsStreamWrapper::register();
@@ -299,6 +337,7 @@ class vfsStreamWrapperDirTestCase extends vfsStreamWrapperBaseTestCase
     /**
      * @test
      */
+    #[Test]
     public function rmdirCanNotRemoveFiles(): void
     {
         assertFalse(rmdir($this->fileInSubdir->url()));
@@ -307,6 +346,7 @@ class vfsStreamWrapperDirTestCase extends vfsStreamWrapperBaseTestCase
     /**
      * @test
      */
+    #[Test]
     public function rmdirCanNotRemoveNonExistingDirectory(): void
     {
         assertFalse(rmdir($this->root->url() . '/another'));
@@ -315,6 +355,7 @@ class vfsStreamWrapperDirTestCase extends vfsStreamWrapperBaseTestCase
     /**
      * @test
      */
+    #[Test]
     public function rmdirCanNotRemoveNonEmptyDirectory(): void
     {
         assertFalse(rmdir($this->root->url()));
@@ -323,6 +364,7 @@ class vfsStreamWrapperDirTestCase extends vfsStreamWrapperBaseTestCase
     /**
      * @test
      */
+    #[Test]
     public function rmdirCanRemoveEmptyDirectory(): void
     {
         vfsStream::newDirectory('empty')->at($this->root);
@@ -333,6 +375,7 @@ class vfsStreamWrapperDirTestCase extends vfsStreamWrapperBaseTestCase
     /**
      * @test
      */
+    #[Test]
     public function rmdirCanRemoveEmptyDirectoryWithDot(): void
     {
         vfsStream::newDirectory('empty')->at($this->root);
@@ -343,6 +386,7 @@ class vfsStreamWrapperDirTestCase extends vfsStreamWrapperBaseTestCase
     /**
      * @test
      */
+    #[Test]
     public function rmdirCanRemoveEmptyRoot(): void
     {
         $this->root->removeChild('subdir');
@@ -357,6 +401,9 @@ class vfsStreamWrapperDirTestCase extends vfsStreamWrapperBaseTestCase
      * @group  permissions
      * @group  bug_15
      */
+    #[Test]
+    #[Group('permissions')]
+    #[Group('bug_15')]
     public function rmdirDirCanNotRemoveDirFromNonWritingDirectory(): void
     {
         $nonRemovable = vfsStream::newDirectory('nonRemovableFolder')->at($this->root);
@@ -370,6 +417,9 @@ class vfsStreamWrapperDirTestCase extends vfsStreamWrapperBaseTestCase
      * @group  permissions
      * @group  bug_17
      */
+    #[Test]
+    #[Group('permissions')]
+    #[Group('bug_17')]
     public function issue17(): void
     {
         $this->root->chmod(0770)
@@ -383,6 +433,8 @@ class vfsStreamWrapperDirTestCase extends vfsStreamWrapperBaseTestCase
      * @test
      * @group  bug_19
      */
+    #[Test]
+    #[Group('bug_19')]
     public function accessWithDoubleDotReturnsCorrectContent(): void
     {
         assertThat(
@@ -395,6 +447,8 @@ class vfsStreamWrapperDirTestCase extends vfsStreamWrapperBaseTestCase
      * @test
      * @group bug_115
      */
+    #[Test]
+    #[Group('bug_115')]
     public function accessWithExcessDoubleDotsReturnsCorrectContent(): void
     {
         assertThat(
@@ -407,6 +461,8 @@ class vfsStreamWrapperDirTestCase extends vfsStreamWrapperBaseTestCase
      * @test
      * @group bug_115
      */
+    #[Test]
+    #[Group('bug_115')]
     public function alwaysResolvesRootDirectoryAsOwnParentWithDoubleDot(): void
     {
         $this->root->chown(vfsStream::OWNER_USER_1);
@@ -420,6 +476,8 @@ class vfsStreamWrapperDirTestCase extends vfsStreamWrapperBaseTestCase
      * @since  0.11.0
      * @group  issue_23
      */
+    #[Test]
+    #[Group('bug_23')]
     public function unlinkCanNotRemoveNonEmptyDirectory(): void
     {
         expect(function (): void {
@@ -435,6 +493,8 @@ class vfsStreamWrapperDirTestCase extends vfsStreamWrapperBaseTestCase
      * @since  0.11.0
      * @group  issue_23
      */
+    #[Test]
+    #[Group('bug_23')]
     public function unlinkCanNotRemoveEmptyDirectory(): void
     {
         $url = vfsStream::newDirectory('empty')->at($this->root)->url();
@@ -450,6 +510,8 @@ class vfsStreamWrapperDirTestCase extends vfsStreamWrapperBaseTestCase
      * @test
      * @group  issue_32
      */
+    #[Test]
+    #[Group('bug_32')]
     public function canCreateFolderOfSameNameAsParentFolder(): void
     {
         $root = vfsStream::setup('testFolder');
@@ -461,6 +523,8 @@ class vfsStreamWrapperDirTestCase extends vfsStreamWrapperBaseTestCase
      * @test
      * @group  issue_32
      */
+    #[Test]
+    #[Group('bug_32')]
     public function canRetrieveFolderOfSameNameAsParentFolder(): void
     {
         $root = vfsStream::setup('testFolder');

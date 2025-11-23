@@ -13,6 +13,7 @@ namespace bovigo\vfs\tests;
 
 use bovigo\vfs\vfsStream;
 use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\Test;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
@@ -39,6 +40,8 @@ use const DIRECTORY_SEPARATOR;
  * @group  dir
  * @group  iteration
  */
+#[Group('dir')]
+#[Group('iteration')]
 class DirectoryIterationTestCase extends vfsStreamWrapperBaseTestCase
 {
     /**
@@ -136,6 +139,10 @@ class DirectoryIterationTestCase extends vfsStreamWrapperBaseTestCase
      * @group  regression
      * @group  bug_2
      */
+    #[Test]
+    #[DataProvider('provideSwitchWithExpectations')]
+    #[Group('regression')]
+    #[Group('bug_2')]
     public function directoryIterationWithOpenDir_Bug_2(callable $switchDotFiles, array $expectedDirectories): void
     {
         $switchDotFiles();
@@ -167,6 +174,10 @@ class DirectoryIterationTestCase extends vfsStreamWrapperBaseTestCase
      * @group  regression
      * @group  bug_4
      */
+    #[Test]
+    #[DataProvider('provideSwitchWithExpectations')]
+    #[Group('regression')]
+    #[Group('bug_4')]
     public function directoryIteration_Bug_4(callable $switchDotFiles, array $expectedDirectories): void
     {
         $switchDotFiles();
@@ -254,6 +265,8 @@ class DirectoryIterationTestCase extends vfsStreamWrapperBaseTestCase
      * @test
      * @group  issue_50
      */
+    #[Test]
+    #[Group('issue_50')]
     public function recursiveDirectoryIterationWithDotsEnabled(): void
     {
         vfsStream::enableDotfiles();
@@ -305,6 +318,8 @@ class DirectoryIterationTestCase extends vfsStreamWrapperBaseTestCase
      * @test
      * @group  issue_50
      */
+    #[Test]
+    #[Group('issue_50')]
     public function recursiveDirectoryIterationWithDotsDisabled(): void
     {
         vfsStream::disableDotfiles();

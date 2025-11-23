@@ -145,6 +145,8 @@ class vfsStreamWrapperTestCase extends vfsStreamWrapperBaseTestCase
      * @test
      * @group  issue_23
      */
+    #[Test]
+    #[Group('issue_23')]
     public function unlinkRemovesFiles(): void
     {
         assertTrue(unlink($this->fileInRoot->url()));
@@ -156,6 +158,8 @@ class vfsStreamWrapperTestCase extends vfsStreamWrapperBaseTestCase
      * @test
      * @group  issue_49
      */
+    #[Test]
+    #[Group('issue_49')]
     public function unlinkReturnsFalseWhenFileDoesNotExist(): void
     {
         assertFalse(@unlink(vfsStream::url('root.blubb2')));
@@ -165,6 +169,8 @@ class vfsStreamWrapperTestCase extends vfsStreamWrapperBaseTestCase
      * @test
      * @group  issue_49
      */
+    #[Test]
+    #[Group('issue_49')]
     public function unlinkReturnsFalseWhenFileDoesNotExistAndFileWithSameNameExistsInRoot(): void
     {
         vfsStream::setup()->addChild(vfsStream::newFile('foo.blubb'));
@@ -254,6 +260,8 @@ class vfsStreamWrapperTestCase extends vfsStreamWrapperBaseTestCase
      * @test
      * @group issue_167
      */
+    #[Test]
+    #[Group('issue_167')]
     public function fileNotOwnedByUserOrGroupIsNotReadable(): void
     {
         $this->root->chown(vfsStream::getCurrentUser());
@@ -277,6 +285,8 @@ class vfsStreamWrapperTestCase extends vfsStreamWrapperBaseTestCase
      * @test
      * @group issue_167
      */
+    #[Test]
+    #[Group('issue_167')]
     public function fileNotOwnedByUserOrGroupIsReadable(): void
     {
         $this->root->chown(vfsStream::getCurrentUser());
