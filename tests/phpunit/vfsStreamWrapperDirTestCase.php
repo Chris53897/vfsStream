@@ -14,6 +14,8 @@ namespace bovigo\vfs\tests;
 use bovigo\vfs\vfsStream;
 use bovigo\vfs\vfsStreamWrapper;
 
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Test;
 use function bovigo\assert\assertFalse;
 use function bovigo\assert\assertNotNull;
 use function bovigo\assert\assertNull;
@@ -43,7 +45,7 @@ class vfsStreamWrapperDirTestCase extends vfsStreamWrapperBaseTestCase
     /**
      * @return string[][]
      */
-    public function newRoots(): array
+    public static function newRoots(): array
     {
         return [
             ['another'],
@@ -94,7 +96,7 @@ class vfsStreamWrapperDirTestCase extends vfsStreamWrapperBaseTestCase
     /**
      * @return string[][]
      */
-    public function mkdirChildren(): array
+    public static function mkdirChildren(): array
     {
         return [['another'], ['another/more']];
     }
@@ -243,7 +245,7 @@ class vfsStreamWrapperDirTestCase extends vfsStreamWrapperBaseTestCase
     /**
      * @return string[][]
      */
-    public function directories(): array
+    public static function directories(): array
     {
         return [
             [vfsStream::url('root')],
@@ -265,7 +267,7 @@ class vfsStreamWrapperDirTestCase extends vfsStreamWrapperBaseTestCase
     /**
      * @return string[][]
      */
-    public function nonDirectories(): array
+    public static function nonDirectories(): array
     {
         return [
             [vfsStream::url('root/subdir/file1.txt')],
@@ -278,6 +280,8 @@ class vfsStreamWrapperDirTestCase extends vfsStreamWrapperBaseTestCase
      * @test
      * @dataProvider nonDirectories
      */
+    #[Test]
+    #[DataProvider('nonDirectories')]
     public function is_dirReturnsFalseForFilesAndNonExistingDirectories(string $file): void
     {
         assertFalse(is_dir($file));

@@ -12,6 +12,8 @@ declare(strict_types=1);
 namespace bovigo\vfs\tests;
 
 use bovigo\vfs\vfsStream;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Test;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 
@@ -50,7 +52,7 @@ class DirectoryIterationTestCase extends vfsStreamWrapperBaseTestCase
     /**
      * @return string[][]
      */
-    public function provideSwitchWithExpectations(): array
+    public static function provideSwitchWithExpectations(): array
     {
         return [
             [[vfsStream::class, 'disableDotfiles'], ['subdir', 'file2']],
@@ -74,6 +76,8 @@ class DirectoryIterationTestCase extends vfsStreamWrapperBaseTestCase
      * @test
      * @dataProvider  provideSwitchWithExpectations
      */
+    #[Test]
+    #[DataProvider('provideSwitchWithExpectations')]
     public function directoryIteration(callable $switchDotFiles, array $expectedDirectories): void
     {
         $switchDotFiles();
